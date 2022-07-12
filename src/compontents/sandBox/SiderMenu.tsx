@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Layout, Menu } from 'antd';
+import React, { useEffect, useState } from 'react'
+import { Layout, Menu, MenuProps } from 'antd';
 import {
     UploadOutlined,
     UserOutlined,
@@ -7,61 +7,79 @@ import {
     PieChartOutlined
   } from '@ant-design/icons';
 import './index.css'
-import type { MenuProps } from 'antd';
+import axios from 'axios';
+import { RouteComponentProps, useHistory, withRouter } from 'react-router-dom';
 const {Sider} = Layout;
 
-type MenuItem = Required<MenuProps>['items'][number];
-type PropsType = {
+interface PropsType extends RouteComponentProps {
     collapsed: boolean
 }
 const SiderMenu:React.FC<PropsType> = (props) =>  {
-    const {collapsed} = props
+  const {collapsed} = props
+  const [menu, setMenu] = useState([])
+  useEffect(()=> {
+    axios.get('http://localhost:3004/rights?_embed=children').then(res=> {
+      setMenu(res.data)
+    })
+  },[])
 
-    function getItem(
-        label: React.ReactNode,
-        key: React.Key,
-        icon?: React.ReactNode,
-        children?: MenuItem[],
-        type?: 'group',
-    ): MenuItem {
-    return {
-        key,
-        icon,
-        children,
-        label,
-        type,
-        } as MenuItem;
-    }
-  const items: MenuItem[] = [
-    getItem('Option 1', '1', <PieChartOutlined />),
-    getItem('Option 2', '2', <PieChartOutlined />),
-    getItem('Option 3', '3', <PieChartOutlined />),
-  
-    getItem('Navigation One', 'sub1', <PieChartOutlined />, [
-      getItem('Option 5', '5'),
-      getItem('Option 6', '6'),
-      getItem('Option 7', '7'),
-      getItem('Option 8', '8'),
-    ]),
-  
-    getItem('Navigation Two', 'sub2', <PieChartOutlined />, [
-      getItem('Option 9', '9'),
-      getItem('Option 10', '10'),
-    ]),
-  ];
+
+  // 原数据类型
+  type itemType = {
+      id: number;
+      title: string;
+      key: string;
+      pagepermisson: number;
+      grade: number;
+      children?: itemType[];
+  };
+
+  type MenuItem = {
+      label: React.ReactNode;
+      key: string | number;
+      icon?: React.ReactNode;
+      children?: MenuItem[];
+  };
+
+  function diffTree(list: itemType[]): MenuItem[] {
+      return list.filter(itemA=> itemA.pagepermisson === 1).map((item) => {
+          const obj = {
+              label: item.title,
+              key: item.key,
+              icon: <PieChartOutlined/>,
+              children: item.children?.length && Array.isArray(item.children) ? diffTree(item.children) : undefined
+          };
+          return obj;
+      });
+  } 
+  const history = useHistory()
+  const onSelect: MenuProps['onSelect'] = keys => {
+    history.push(keys.key)
+  }
+
+
+  const usehistory = useHistory()
+  const selectKeys = [props.location.pathname]
+  const openKeys = ["/"+props.location.pathname.split("/")[1]]
   return (
     <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="logo">管理系统</div>
-        <Menu
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
-            mode="inline"
-            theme="dark"
-            inlineCollapsed={collapsed}
-            items={items}
-        />
+      <div style={{display:'flex', height:'100%',flexDirection:'column'}}>
+          <div className="logo">管理系统</div>
+          <div style={{flex:1,overflow:'auto'}}>
+
+            <Menu
+                defaultSelectedKeys={selectKeys}
+                defaultOpenKeys={openKeys}
+                mode="inline"
+                theme="dark"
+                inlineCollapsed={collapsed}
+                items={diffTree(menu)}
+                onSelect={onSelect}
+            />
+          </div>
+      </div>
     </Sider>
   )
 }
 
-export default SiderMenu
+export default withRouter(SiderMenu)

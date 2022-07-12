@@ -1,4 +1,3 @@
-import Sider from 'antd/lib/layout/Sider'
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import SiderMenu from '../../compontents/sandBox/SiderMenu'
@@ -27,13 +26,14 @@ export default function NewsSandBox() {
                     margin: '24px 16px',
                     padding: 24,
                     minHeight: 280,
+                    overflow: 'auto'
                 }}
                 >
                 <Switch>
                     <Route path='/home' component={ Home }></Route>
-                    <Route path='/user/management/list' component = { UserList }></Route>
-                    <Route path='/right/management/role/list' component = { RoleList }></Route>
-                    <Route path='/right/management/right/list' component = { RightList }></Route>
+                    <Route path='/user-manage/list' component = { UserList }></Route>
+                    <Route path='/right-manage/role/list' component = { RoleList }></Route>
+                    <Route path='/right-manage/right/list' component = { RightList }></Route>
                     <Redirect from='/' to='/home' exact/>
                     <Route path='*' component={ NoPermission }></Route>
                 </Switch>
