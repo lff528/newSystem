@@ -53,6 +53,7 @@ export default function RightList() {
       },
     });
   }
+  
   const deleteMethod = (item:DataType)=> {
     axios.delete(`http://localhost:3004/rights/${item.id}`).then(res=> {
     })
