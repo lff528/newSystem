@@ -1,26 +1,24 @@
 import React from 'react'
 import menuList from "../../routerConfig/index"
-import { HashRouter as Router, Switch, Route, Link ,Redirect,useHistory} from "react-router-dom";
+import { HashRouter as Router, Switch, Route ,Redirect,useHistory, withRouter, RouteComponentProps} from "react-router-dom";
 import type { MenuProps } from 'antd';
-// import { type } from '@testing-library/user-event/dist/type';
-import {Layout, Menu, Row, Col, Dropdown,} from 'antd';
-import { SnippetsFilled, PieChartFilled, ApiFilled, PieChartOutlined ,DownOutlined} from '@ant-design/icons';
+import {Layout, Menu, Row, Col} from 'antd';
 const { Header, Content, Sider } = Layout;
 
-
-
-type PropsType = {
-    history: any,
-    match: any
+interface propsType extends RouteComponentProps {
+    sideStatus?: boolean
 }
-const Home:React.FC<PropsType> = (props)=> {
+
+const Home:React.FC<propsType>= (props)=> {
 
   const History = useHistory()
   type MenuItem = Required<MenuProps>['items'][number];
   const items:MenuItem[] = menuList
   
   const onClick : MenuProps['onClick'] = e => {
-    History.push(props.match.path+e.key)
+    console.log(e,History);
+    
+    // History.push(e.key)
   }
   return (
     <Layout style={{ height: '100vh' }}>
@@ -62,11 +60,11 @@ const Home:React.FC<PropsType> = (props)=> {
             >
                 <Router>
                     <Switch>
-                        <Redirect from='/home' exact to='/home/couponManagement' /> 
+                        <Redirect from='/home' exact to='/couponManagement' /> 
                         {
                             menuList.map(item => {
                                 return item.children.map(itemA => {
-                                    return <Route path={item.key+itemA.key} component={itemA.component}></Route>
+                                    return <Route path={itemA.key} component={itemA.component}></Route>
                                 })
                             })
                         }
@@ -79,4 +77,4 @@ const Home:React.FC<PropsType> = (props)=> {
   )
 }
 
-export default Home
+export default withRouter(Home)

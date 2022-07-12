@@ -1,6 +1,6 @@
 
 
-import { SnippetsFilled, PieChartFilled, ApiFilled, PieChartOutlined } from '@ant-design/icons';
+import { SnippetsFilled } from '@ant-design/icons';
 import CouponManagement from "../view/campPromotionCenter/CouponManagement"
 import ActivityThemeManagement from '../view/campPromotionCenter/ActivityThemeManagement'
 const menuList = [

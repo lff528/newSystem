@@ -1,7 +1,7 @@
 import React from 'react'
-import IndexRouter from "./router/index"
+import Home from "./view/home/index"
 import './App.css'
 const App:React.FC = ()=> {
-  return <IndexRouter></IndexRouter>
+  return <Home></Home>
 }
 export default App

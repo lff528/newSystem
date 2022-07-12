@@ -10,7 +10,6 @@ const Main:React.FC = ()=> {
                 <Redirect from='/' exact to='/home' />
                 <Route path='/login'  component={Login}></Route>
                 <Route path='/home' component={Home}></Route>
-                {/* <Route path='/couponManagement' component={CouponManagement}></Route> */}
             </Switch>
         </Router>
     </div>

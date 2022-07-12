@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { log } from 'console'
 import React, { useEffect } from 'react'
 
 const CouponManagement:React.FC = ()=> {
