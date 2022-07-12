@@ -1,4 +1,3 @@
-import Sider from 'antd/lib/layout/Sider'
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import SiderMenu from '../../compontents/sandBox/SiderMenu'

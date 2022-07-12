@@ -3,10 +3,10 @@ import { HashRouter, Redirect, Route, Switch } from 'react-router-dom'
 import Login from "../view/login"
 import NewsSandBox from  "../view/sandBox/NewsSandBox"
 
-type propType = {
-    children:any,
-    history: any
-  }
+// type propType = {
+//     children:any,
+//     history: any
+//   }
 const IndexRouter:React.FC = ()=> {
     return (
         <HashRouter>

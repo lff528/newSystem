@@ -47,6 +47,7 @@ const SiderMenu:React.FC<PropsType> = (props) =>  {
     getItem('Navigation Two', 'sub2', <PieChartOutlined />, [
       getItem('Option 9', '9'),
       getItem('Option 10', '10'),
+      getItem('Submenu', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
     ]),
   ];
   return (

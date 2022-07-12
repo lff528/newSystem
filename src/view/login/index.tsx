@@ -1,7 +1,7 @@
 import React from 'react'
 import './index.scss'
 import { Button } from 'antd'
-import { type } from '@testing-library/user-event/dist/type'
+// import { type } from '@testing-library/user-event/dist/type'
 
 type propType = {
   children:any,
